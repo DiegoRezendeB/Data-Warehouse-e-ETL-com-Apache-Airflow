@@ -50,8 +50,7 @@ Passo a Passo
 
 Clone o repositório:
 
-git clone [https://github.com/seu-usuario/adventureworks-etl.git](https://github.com/seu-usuario/adventureworks-etl.git)
-cd adventureworks-etl
+git clone [https://github.com/DiegoRezendeB/Data-Warehouse-e-ETL-com-Apache-Airflow.git)
 
 
 Inicie o ambiente (Airflow + Postgres):
