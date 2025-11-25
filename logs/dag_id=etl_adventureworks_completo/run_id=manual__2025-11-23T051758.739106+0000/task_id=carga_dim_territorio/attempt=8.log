@@ -1,0 +1,240 @@
+[2025-11-23T14:54:18.973+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-11-23T14:54:19.008+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_adventureworks_completo.carga_dim_territorio manual__2025-11-23T05:17:58.739106+00:00 [queued]>
+[2025-11-23T14:54:19.024+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_adventureworks_completo.carga_dim_territorio manual__2025-11-23T05:17:58.739106+00:00 [queued]>
+[2025-11-23T14:54:19.025+0000] {taskinstance.py:2866} INFO - Starting attempt 8 of 8
+[2025-11-23T14:54:19.049+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): carga_dim_territorio> on 2025-11-23 05:17:58.739106+00:00
+[2025-11-23T14:54:19.077+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=228) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-11-23T14:54:19.081+0000] {standard_task_runner.py:72} INFO - Started process 240 to run task
+[2025-11-23T14:54:19.079+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'etl_adventureworks_completo', 'carga_dim_territorio', 'manual__2025-11-23T05:17:58.739106+00:00', '--job-id', '88', '--raw', '--subdir', 'DAGS_FOLDER/etl_adventureworks.py', '--cfg-path', '/tmp/tmpf08mzxf8']
+[2025-11-23T14:54:19.083+0000] {standard_task_runner.py:105} INFO - Job 88: Subtask carga_dim_territorio
+[2025-11-23T14:54:19.186+0000] {task_command.py:467} INFO - Running <TaskInstance: etl_adventureworks_completo.carga_dim_territorio manual__2025-11-23T05:17:58.739106+00:00 [running]> on host 64d315d8ec51
+[2025-11-23T14:54:19.504+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='seu_nome' AIRFLOW_CTX_DAG_ID='etl_adventureworks_completo' AIRFLOW_CTX_TASK_ID='carga_dim_territorio' AIRFLOW_CTX_EXECUTION_DATE='2025-11-23T05:17:58.739106+00:00' AIRFLOW_CTX_TRY_NUMBER='8' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-11-23T05:17:58.739106+00:00'
+[2025-11-23T14:54:19.506+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-11-23T14:54:19.530+0000] {logging_mixin.py:190} INFO - Iniciando ETL Dim_Territorio...
+[2025-11-23T14:54:19.595+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+                                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+psycopg2.errors.UndefinedColumn: column "nome_territorio" of relation "dim_territorio" does not exist
+LINE 1: ...T INTO dw.dim_territorio (id_territorio_original, nome_terri...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/etl_adventureworks.py", line 45, in etl_dim_territorio
+    df_dim.to_sql('dim_territorio', engine, schema='dw', if_exists='append', index=False)
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/core/generic.py", line 3008, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 788, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1958, in to_sql
+    total_inserted = sql_engine.insert_records(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1507, in insert_records
+    raise err
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1498, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1059, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 951, in _execute_insert
+    result = conn.execute(self.table.insert(), data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+                                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column "nome_territorio" of relation "dim_territorio" does not exist
+LINE 1: ...T INTO dw.dim_territorio (id_territorio_original, nome_terri...
+                                                             ^
+
+[SQL: INSERT INTO dw.dim_territorio (id_territorio_original, nome_territorio, codigo_pais, grupo) VALUES (%(id_territorio_original)s, %(nome_territorio)s, %(codigo_pais)s, %(grupo)s)]
+[parameters: ({'id_territorio_original': 1, 'nome_territorio': 'Northwest', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 2, 'nome_territorio': 'Northeast', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 3, 'nome_territorio': 'Central', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 4, 'nome_territorio': 'Southwest', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 5, 'nome_territorio': 'Southeast', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 6, 'nome_territorio': 'Canada', 'codigo_pais': 'CA', 'grupo': 'North America'}, {'id_territorio_original': 7, 'nome_territorio': 'France', 'codigo_pais': 'FR', 'grupo': 'Europe'}, {'id_territorio_original': 8, 'nome_territorio': 'Germany', 'codigo_pais': 'DE', 'grupo': 'Europe'}, {'id_territorio_original': 9, 'nome_territorio': 'Australia', 'codigo_pais': 'AU', 'grupo': 'Pacific'}, {'id_territorio_original': 10, 'nome_territorio': 'United Kingdom', 'codigo_pais': 'GB', 'grupo': 'Europe'})]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-11-23T14:54:19.626+0000] {taskinstance.py:1225} INFO - Marking task as FAILED. dag_id=etl_adventureworks_completo, task_id=carga_dim_territorio, run_id=manual__2025-11-23T05:17:58.739106+00:00, execution_date=20251123T051758, start_date=20251123T145419, end_date=20251123T145419
+[2025-11-23T14:54:19.642+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-11-23T14:54:19.645+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 88 for task carga_dim_territorio ((psycopg2.errors.UndefinedColumn) column "nome_territorio" of relation "dim_territorio" does not exist
+LINE 1: ...T INTO dw.dim_territorio (id_territorio_original, nome_terri...
+                                                             ^
+
+[SQL: INSERT INTO dw.dim_territorio (id_territorio_original, nome_territorio, codigo_pais, grupo) VALUES (%(id_territorio_original)s, %(nome_territorio)s, %(codigo_pais)s, %(grupo)s)]
+[parameters: ({'id_territorio_original': 1, 'nome_territorio': 'Northwest', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 2, 'nome_territorio': 'Northeast', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 3, 'nome_territorio': 'Central', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 4, 'nome_territorio': 'Southwest', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 5, 'nome_territorio': 'Southeast', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 6, 'nome_territorio': 'Canada', 'codigo_pais': 'CA', 'grupo': 'North America'}, {'id_territorio_original': 7, 'nome_territorio': 'France', 'codigo_pais': 'FR', 'grupo': 'Europe'}, {'id_territorio_original': 8, 'nome_territorio': 'Germany', 'codigo_pais': 'DE', 'grupo': 'Europe'}, {'id_territorio_original': 9, 'nome_territorio': 'Australia', 'codigo_pais': 'AU', 'grupo': 'Pacific'}, {'id_territorio_original': 10, 'nome_territorio': 'United Kingdom', 'codigo_pais': 'GB', 'grupo': 'Europe'})]
+(Background on this error at: https://sqlalche.me/e/14/f405); 240)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+                                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+psycopg2.errors.UndefinedColumn: column "nome_territorio" of relation "dim_territorio" does not exist
+LINE 1: ...T INTO dw.dim_territorio (id_territorio_original, nome_terri...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/etl_adventureworks.py", line 45, in etl_dim_territorio
+    df_dim.to_sql('dim_territorio', engine, schema='dw', if_exists='append', index=False)
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/core/generic.py", line 3008, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 788, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1958, in to_sql
+    total_inserted = sql_engine.insert_records(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1507, in insert_records
+    raise err
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1498, in insert_records
+    return table.insert(chunksize=chunksize, method=method)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1059, in insert
+    num_inserted = exec_insert(conn, keys, chunk_iter)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 951, in _execute_insert
+    result = conn.execute(self.table.insert(), data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 334, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1577, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1890, in _execute_context
+    self.dialect.do_executemany(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 982, in do_executemany
+    context._psycopg2_fetched_rows = xtras.execute_values(
+                                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/extras.py", line 1299, in execute_values
+    cur.execute(b''.join(parts))
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column "nome_territorio" of relation "dim_territorio" does not exist
+LINE 1: ...T INTO dw.dim_territorio (id_territorio_original, nome_terri...
+                                                             ^
+
+[SQL: INSERT INTO dw.dim_territorio (id_territorio_original, nome_territorio, codigo_pais, grupo) VALUES (%(id_territorio_original)s, %(nome_territorio)s, %(codigo_pais)s, %(grupo)s)]
+[parameters: ({'id_territorio_original': 1, 'nome_territorio': 'Northwest', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 2, 'nome_territorio': 'Northeast', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 3, 'nome_territorio': 'Central', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 4, 'nome_territorio': 'Southwest', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 5, 'nome_territorio': 'Southeast', 'codigo_pais': 'US', 'grupo': 'North America'}, {'id_territorio_original': 6, 'nome_territorio': 'Canada', 'codigo_pais': 'CA', 'grupo': 'North America'}, {'id_territorio_original': 7, 'nome_territorio': 'France', 'codigo_pais': 'FR', 'grupo': 'Europe'}, {'id_territorio_original': 8, 'nome_territorio': 'Germany', 'codigo_pais': 'DE', 'grupo': 'Europe'}, {'id_territorio_original': 9, 'nome_territorio': 'Australia', 'codigo_pais': 'AU', 'grupo': 'Pacific'}, {'id_territorio_original': 10, 'nome_territorio': 'United Kingdom', 'codigo_pais': 'GB', 'grupo': 'Europe'})]
+(Background on this error at: https://sqlalche.me/e/14/f405)
+[2025-11-23T14:54:19.702+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2025-11-23T14:54:19.725+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-23T14:54:19.728+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
